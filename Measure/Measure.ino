@@ -26,6 +26,7 @@ Ticker mqttReconnectTimer;
 
 WiFiEventHandler wifiConnectHandler;
 WiFiEventHandler wifiDisconnectHandler;
+
 Ticker wifiReconnectTimer;
 
 HX711 scale(DOUT, CLK);
@@ -37,8 +38,12 @@ char publishValue[10];
 double measured_weight ;
 boolean break_weight_loop=true;
 
+IPAddress ip(192, 168, 0, 114); 
+IPAddress gateway_dns(192, 168, 0, 1);
+
 void connectToWifi() {
     Serial.println("Connecting to Wi-Fi...");
+    WiFi.config(ip, gateway_dns, gateway_dns); 
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 }
 
