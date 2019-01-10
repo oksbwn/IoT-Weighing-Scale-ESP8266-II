@@ -123,11 +123,11 @@ void loop() {
                 break_weight_loop = false;
                 digitalWrite(RED_L, LOW);
                 digitalWrite(YELLOW_L, HIGH);
+                sprintf(publishValue, "%f", measured_weight);
+                yield();
+                mqttClient.publish("home/bathroom/scale/weight", 1, true, publishValue);
             }
         }
-        sprintf(publishValue, "%f", measured_weight);
-        yield();
-        mqttClient.publish("home/bathroom/scale/weight", 1, true, publishValue);
     }
     scale.power_down();
     delay(2000);
