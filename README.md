@@ -8,7 +8,7 @@ A Smart Bathroom weighing scale using a generic bathromm scale and WeMOS.The Wem
 
 ### Prerequisites
 
-*AsyncMQTTClient: https://github.com/marvinroger/async-mqtt-client
-*HX711 Libraries: https://github.com/bogde/HX711
+* AsyncMQTTClient: https://github.com/marvinroger/async-mqtt-client
+* HX711 Libraries: https://github.com/bogde/HX711
 
 ### Video and Blog
