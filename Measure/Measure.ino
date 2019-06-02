@@ -95,6 +95,7 @@ void setup() {
     mqttClient.onConnect(onMqttConnect);
     mqttClient.onDisconnect(onMqttDisconnect);
     mqttClient.setServer(MQTT_HOST, MQTT_PORT);
+//     mqttClient.setCredentials("user_name","pwd"); //If your <QTT connection needs credentials
 
     connectToWifi();
 
