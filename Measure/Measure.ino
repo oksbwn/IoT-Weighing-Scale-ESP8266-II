@@ -10,10 +10,13 @@
 #define MQTT_PORT 1883
 
 //Calibration factor for HX711
-#define CAL_FACTOR 11280.00 //This value is obtained using the caliberation sketch
-#define CONV_FACTOR 0.453592
+#define CAL_FACTOR 25380.00 //This value is obtained using the caliberation sketch
+
+//Connecting GPIOs
 #define DOUT 13
 #define CLK 15
+
+//notifications LEDs
 #define RED_L 12
 #define YELLOW_L 14
 
@@ -95,7 +98,7 @@ void setup() {
     mqttClient.onConnect(onMqttConnect);
     mqttClient.onDisconnect(onMqttDisconnect);
     mqttClient.setServer(MQTT_HOST, MQTT_PORT);
-//     mqttClient.setCredentials("user_name","pwd"); //If your <QTT connection needs credentials
+//    mqttClient.setCredentials("***","**"); //If your <QTT connection needs credentials
 
     connectToWifi();
 
@@ -104,7 +107,7 @@ void setup() {
 
 void loop() {
     scale.power_up();
-    measured_weight = scale.get_units(10) * CONV_FACTOR; //If you want average weight you can pass the num of iterations in get_units()
+    measured_weight = scale.get_units(10); //If you want average weight you can pass the num of iterations in get_units()
     if (measured_weight > _THRESHOLD_WEIGHT && ((millis() - detection_time) > _CON_DELAY)) { //Checking millis to avoid repeated publish
 //      mqttClient.disconnect();
         break_weight_loop=true;
@@ -113,7 +116,7 @@ void loop() {
         detection_time = millis();
         while (break_weight_loop) {
             delay(40);
-            lastWeight = scale.get_units()* CONV_FACTOR;
+            lastWeight = scale.get_units();
             if (lastWeight < _THRESHOLD_WEIGHT) {
                 break_weight_loop = false;
                 digitalWrite(RED_L, LOW);
@@ -139,4 +142,3 @@ void loop() {
     }
 
 }
-
