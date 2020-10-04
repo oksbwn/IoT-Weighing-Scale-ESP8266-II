@@ -7,19 +7,24 @@
 
 //Connecting GPIOs
 #define DOUT 13
-#define CLK 15
+#define SCK 15
 
-HX711 scale(DOUT, CLK);
+// Scale Object
+HX711 myScale;
+
 
 void setup() {
-    scale.set_scale(25380);
-    scale.tare();
-
+    myScale.begin(DOUT,SCK);
+    myScale.set_scale(0.021900);
+    myScale.tare();
     Serial.begin(115200);
-    Serial.println();
+    Serial.println("Place known Weight !");
+    delay(10000);
 }
 
 void loop() {
-     Serial.println(scale.get_units(10));
-     delay(100);
+    if (myScale.is_ready()) {
+     Serial.println(myScale.get_units(10));
+    }
+     delay(10000);
 }
